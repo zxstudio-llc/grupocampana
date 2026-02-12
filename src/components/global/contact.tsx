@@ -3,8 +3,8 @@ import { Mail, Phone, MapPin } from "lucide-react";
 
 const ContactSection = () => {
     return (
-        <section className="py-20 md:py-32 overflow-hidden">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <section className="py-20 md:py-32 overflow-hidden ">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center max-w-7xl">
                     
                     {/* Columna Izquierda: Información de Contacto */}
                     <div className="flex flex-col space-y-8">

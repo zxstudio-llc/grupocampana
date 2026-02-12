@@ -33,7 +33,7 @@ const faqs = [
 const FAQSection = () => {
     return (
         <section className="py-20 lg:py-32 overflow-hidden">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start max-w-7xl">
 
                     {/* Título Principal */}
                     <div className="max-w-md">
