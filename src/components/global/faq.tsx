@@ -4,7 +4,6 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Container } from "@/components";
 import { Plus } from "lucide-react";
 
 const faqs = [
@@ -33,37 +32,41 @@ const faqs = [
 const FAQSection = () => {
     return (
         <section className="py-20 lg:py-32 overflow-hidden">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start max-w-7xl">
+            {/* Contenedor con Padding Lateral para Mobile */}
+            <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-8">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
 
-                    {/* Título Principal */}
-                    <div className="max-w-md">
-                        <h2 className="text-5xl md:text-7xl font-bold text-[#001D3D] tracking-tighter leading-none">
+                    {/* Título Principal - Ocupa 5 columnas en desktop */}
+                    <div className="lg:col-span-5 w-full">
+                        <h2 className="text-4xl md:text-7xl font-bold text-[#001D3D] tracking-tighter leading-none">
                             Preguntas <br />
                             <span className="text-gray-400">frecuentes</span>
                         </h2>
+                        <p className="mt-6 text-gray-600 text-lg hidden lg:block">
+                            Resolvemos tus dudas sobre nuestra solidez y modelo de inversión.
+                        </p>
                     </div>
-                    <div className="w-full lg:max-w-2xl ml-auto">
-                        <Accordion type="single" collapsible className="w-full space-y-4">
+
+                    {/* Acordeón - Ocupa 7 columnas en desktop */}
+                    <div className="lg:col-span-7 w-full">
+                        <Accordion type="single" collapsible className="w-full space-y-2">
                             {faqs.map((faq, index) => (
                                 <AccordionItem
                                     key={index}
                                     value={`item-${index}`}
-                                    className="border-b border-[#001D3D]/10 px-2 w-full block"
+                                    className="border-b border-[#001D3D]/10 px-0 w-full"
                                 >
-                                    <AccordionTrigger className="text-[#001D3D] hover:no-underline text-lg md:text-xl font-medium py-6 group w-full">
-                                        <div className="flex items-center text-left gap-4 w-full overflow-hidden">
-                                            <Plus className="w-5 h-5 text-blue-500 shrink-0 transition-transform duration-200 group-data-[state=open]:rotate-45" />
-                                            {/* truncate o line-clamp evita que preguntas largas rompan el layout */}
-                                            <span className="truncate md:whitespace-normal">
+                                    <AccordionTrigger className="text-[#001D3D] hover:no-underline text-left py-6 group w-full">
+                                        <div className="flex items-start gap-4 w-full">
+                                            <Plus className="w-5 h-5 text-[#b5934a] shrink-0 mt-1 transition-transform duration-200 group-data-[state=open]:rotate-45" />
+                                            {/* Eliminado truncate para permitir saltos de línea en mobile */}
+                                            <span className="text-lg md:text-xl font-semibold leading-tight">
                                                 {faq.question}
                                             </span>
                                         </div>
                                     </AccordionTrigger>
-                                    <AccordionContent className="text-gray-800 text-lg pl-9 pb-6 leading-relaxed w-full">
-                                        {/* Contenedor interno para asegurar que el texto respete el ancho del padre */}
-                                        <div className="max-w-full overflow-hidden break-words">
-                                            {faq.answer}
-                                        </div>
+                                    <AccordionContent className="text-gray-700 text-base md:text-lg pl-9 pb-8 leading-relaxed">
+                                        {faq.answer}
                                     </AccordionContent>
                                 </AccordionItem>
                             ))}
@@ -71,6 +74,7 @@ const FAQSection = () => {
                     </div>
 
                 </div>
+            </div>
         </section>
     );
 };
