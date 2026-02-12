@@ -12,35 +12,42 @@ const Footer = () => {
             </div>
 
             <div className="max-w-7xl mx-auto relative z-10">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 w-full">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 w-full items-start">
 
-                    {/* Columna 1: Branding Corporativo - CENTRADO EN MÓVIL */}
+                    {/* Columna 1: Branding Corporativo */}
                     <div className="lg:col-span-4 flex flex-col items-center lg:items-start text-center lg:text-left">
-                        <div className="relative mb-6">
+
+                        {/* Contenedor del Logo: Altura fija para alineación perfecta */}
+                        <div className="flex items-center">
+                        <Link href="/" className="flex items-center">
                             <Image
                                 src="/assets/logo.png"
-                                alt="Grupo Campana"
-                                width={260}
-                                height={120}
-                                fill
+                                alt="Grupo Campana Logo"
+                                width={280}
+                                height={90}
                                 className="object-contain"
                                 priority
                             />
-                        </div>
-                        <p className="text-gray-400 text-sm leading-relaxed max-w-[280px]">
-                            Líderes en desarrollo inmobiliario con más de 711 millones en activos.
-                            Solidez y confianza en cada inversión.
-                        </p>
-                        <div className="mt-6 flex flex-col items-center lg:items-start gap-2">
-                            <span className="text-xs font-bold text-[#b5934a] tracking-widest uppercase">
-                                Entrega Inmediata
-                            </span>
-                            <div className="h-[1px] w-12 bg-[#b5934a]"></div>
+                        </Link>
+                    </div>
+                        {/* Contenido de Texto */}
+                        <div className="flex flex-col items-center lg:items-start">
+                            <p className="text-gray-400 text-sm leading-relaxed max-w-[280px]">
+                                Líderes en desarrollo inmobiliario con más de 711 millones en activos.
+                                Solidez y confianza en cada inversión.
+                            </p>
+
+                            <div className="mt-6 flex flex-col items-center lg:items-start gap-2">
+                                <span className="text-xs font-bold text-[#b5934a] tracking-widest uppercase">
+                                    Entrega Inmediata
+                                </span>
+                                <div className="h-[1px] w-12 bg-[#b5934a]"></div>
+                            </div>
                         </div>
                     </div>
 
-                    {/* Contenedor para Columnas 2, 3 y 4 - 2 COLUMNAS EN MÓVIL */}
-                    <div className="lg:col-span-8 grid grid-cols-2 md:grid-cols-3 gap-8">
+                    {/* Contenedor para Columnas 2, 3 y 4 */}
+                    <div className="lg:col-span-8 grid grid-cols-2 md:grid-cols-3 gap-8 pt-2"> {/* pt-2 para nivelar con el logo */}
 
                         {/* Columna 2: Unidades de Negocio */}
                         <div className="flex flex-col">

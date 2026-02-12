@@ -8,7 +8,7 @@ const CompanySection = () => {
         <section className="py-12 md:py-24 bg-white dark:bg-transparent overflow-hidden">
             <Container>
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-                    
+
                     {/* Contenedor de Imagen - OCULTO EN MOBILE */}
                     <div className="hidden lg:block lg:col-span-5 lg:order-1 relative w-full">
                         <div className="relative w-full max-w-[450px] aspect-[4/5] ml-auto">
@@ -24,43 +24,58 @@ const CompanySection = () => {
 
                     {/* Contenedor de Texto - CON PADDING EN MOBILE */}
                     <div className="lg:col-span-7 lg:order-2 flex flex-col items-center lg:items-start text-center lg:text-left px-6 md:px-0">
-                        <h2 className="text-3xl md:text-5xl font-bold text-[#001D3D] leading-tight">
-                            Grupo Campana
+                        {/* Label superior estilo Aceternity */}
+                        <span className="text-[#b5934a] font-bold tracking-[0.2em] text-sm uppercase mb-2">
+                            Nuestra Identidad
+                        </span>
+
+                        {/* Título Principal con Estilo de Impacto */}
+                        <h2 className="text-[#001D3D] text-5xl md:text-7xl font-bold tracking-tighter leading-[0.9]">
+                            GRUPO <br className="hidden md:block" />
+                            <span className="text-[#b5934a]">CAMPANA</span>
                         </h2>
-                        <h3 className="text-2xl md:text-4xl font-semibold text-[#001D3D] mt-1 mb-6">
-                            Innovación Solidez Confianza
+
+                        {/* Subtítulo con estilo moderno */}
+                        <h3 className="text-2xl md:text-3xl font-semibold text-[#001D3D] mt-4 mb-8 leading-tight">
+                            Innovación, <span className="text-[#b5934a]">Solidez</span> y Confianza
                         </h3>
 
-                        <div className="space-y-4 max-w-2xl">
-                            <p className="text-gray-700 leading-relaxed text-base md:text-lg">
+                        {/* Cuerpo de texto con énfasis en palabras clave */}
+                        <div className="space-y-6 max-w-2xl">
+                            <p className="text-[#001D3D] leading-relaxed text-lg md:text-xl">
                                 Somos uno de los grupos empresariales más sólidos y visionarios del Ecuador.
-                                Desde el desarrollo inmobiliario hasta los servicios de salud, financieros, infraestructura,
-                                operación hotelera, alimentos, seguros, administración inmobiliaria y acción social,
-                                impulsamos proyectos que generan valor sostenible y crecimiento económico.
+                                Impulsamos proyectos en <span className="font-bold text-[#b5934a]">bienes raíces, salud, seguros e infraestructura</span>,
+                                generando valor sostenible y crecimiento económico a nivel nacional.
                             </p>
-                            <p className="text-gray-700 leading-relaxed text-base md:text-lg font-medium">
-                                Nos distingue una filosofía clara: construir relaciones profesionales a largo plazo, basadas
-                                en la excelencia, la confianza y el compromiso con el futuro.
+                            <p className="text-[#001D3D] leading-relaxed text-lg font-medium italic border-l-4 border-[#b5934a] pl-4 lg:ml-0">
+                                "Construimos relaciones a largo plazo basadas en la excelencia y el compromiso con el futuro."
                             </p>
                         </div>
-                        
-                        <Link
-                            href="#"
-                            className="mt-8 md:mt-10 px-8 py-4 bg-[#C29B4B] hover:bg-[#A6833D] text-white rounded-full text-base md:text-lg font-medium transition-all shadow-lg hover:shadow-xl w-full sm:w-auto text-center"
-                        >
-                            Conocer más sobre Grupo Campana
-                        </Link>
 
-                        {/* Badges - Centrados y con respiro en mobile */}
-                        <div className="flex flex-wrap justify-center lg:justify-start gap-3 md:gap-4 mt-10 md:mt-12 w-full">
-                            <div className="bg-[#C29B4B] text-white px-5 py-2.5 rounded-full text-xs md:text-base font-medium whitespace-nowrap shadow-sm">
-                                711 Millones En activos
+                        {/* Botón CTA con Efecto de Resplandor (Glow) */}
+                        <div className="relative group mt-10 w-full sm:w-fit">
+                            <div className="absolute -inset-0.5 bg-gradient-to-r from-[#b5934a] to-[#001D3D] rounded-xl blur opacity-30 group-hover:opacity-60 transition duration-1000"></div>
+                            <Link
+                                href="#"
+                                className="relative flex items-center justify-center gap-3 bg-[#001D3D] text-white px-10 py-4 rounded-xl font-bold text-lg transition-all hover:scale-[1.02] active:scale-[0.98]"
+                            >
+                                <span>CONOCER MÁS</span>
+                                <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                </svg>
+                            </Link>
+                        </div>
+
+                        {/* Badges con estilo Premium (Outline / Solid) */}
+                        <div className="flex flex-wrap justify-center lg:justify-start gap-3 md:gap-4 mt-12 w-full">
+                            <div className="bg-[#001D3D] text-white border border-[#b5934a]/30 px-6 py-3 rounded-xl text-xs md:text-sm font-bold tracking-wider uppercase shadow-xl">
+                                711M En activos
                             </div>
-                            <div className="bg-[#C29B4B] text-white px-5 py-2.5 rounded-full text-xs md:text-base font-medium whitespace-nowrap shadow-sm">
-                                + 10.000 Fuentes de empleo
+                            <div className="bg-[#b5934a] text-[#001D3D] px-6 py-3 rounded-xl text-xs md:text-sm font-bold tracking-wider uppercase shadow-xl">
+                                +10k Empleos
                             </div>
-                            <div className="bg-[#C29B4B] text-white px-5 py-2.5 rounded-full text-xs md:text-base font-medium whitespace-nowrap shadow-sm">
-                                13 Unidades de Negocio
+                            <div className="bg-[#001D3D] text-white border border-[#b5934a]/30 px-6 py-3 rounded-xl text-xs md:text-sm font-bold tracking-wider uppercase shadow-xl">
+                                13 Unidades
                             </div>
                         </div>
                     </div>
