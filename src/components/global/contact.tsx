@@ -4,7 +4,6 @@ import { Mail, Phone, MapPin } from "lucide-react";
 const ContactSection = () => {
     return (
         <section className="py-20 md:py-32 overflow-hidden">
-            <Container>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                     
                     {/* Columna Izquierda: Información de Contacto */}
@@ -82,7 +81,6 @@ const ContactSection = () => {
                     </div>
 
                 </div>
-            </Container>
         </section>
     );
 };

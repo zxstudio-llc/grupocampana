@@ -25,7 +25,6 @@ const HomePage = () => {
             <InvestmentsSection/>
             <FAQSection/>
             <ContactSection/>
-
         </section>
     )
 };

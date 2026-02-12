@@ -6,47 +6,47 @@ export default function InvestmentsSection() {
         <section className="py-20 lg:py-32 overflow-hidden">
             <div className="max-w-7xl mx-auto px-4">
                 {/* Cabecera basada en la captura de pantalla */}
-                <div className="flex flex-col lg:grid lg:grid-cols-12 gap-12 mb-24 items-center">
-    {/* Título con Estilo de Impacto */}
-    <div className="lg:col-span-6">
-        <div className="space-y-2">
-            <span className="text-[#b5934a] font-bold tracking-[0.2em] text-sm uppercase">
-                Oportunidades de Inversión
-            </span>
-            <h2 className="text-[#001D3D] text-5xl md:text-7xl font-bold tracking-tighter leading-none">
-                ¿POR QUÉ <br />
-                <span className="text-[#b5934a] inline-block mt-2">INVERTIR EN ECUADOR?</span>
-            </h2>
-        </div>
-    </div>
+                <div className="flex flex-col lg:grid lg:grid-cols-12 gap-12 mb-10 items-center">
+                    {/* Título con Estilo de Impacto */}
+                    <div className="lg:col-span-6">
+                        <div className="space-y-2">
+                            <span className="text-[#b5934a] font-bold tracking-[0.2em] text-sm uppercase">
+                                Oportunidades de Inversión
+                            </span>
+                            <h2 className="text-[#001D3D] text-5xl md:text-7xl font-bold tracking-tighter leading-none">
+                                ¿POR QUÉ <br />
+                                <span className="text-[#b5934a] inline-block mt-2">INVERTIR EN ECUADOR?</span>
+                            </h2>
+                        </div>
+                    </div>
 
-    {/* Descripción con Borde Lateral Decorativo */}
-    <div className="lg:col-span-6 relative lg:pl-12">
-        {/* Línea decorativa vertical estilo Aceternity */}
-        <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-gradient-to-b from-[#b5934a] via-[#001229]/20 to-transparent hidden lg:block" />
-        
-        <h3 className="text-2xl md:text-3xl font-semibold text-[#001D3D] mb-6 leading-tight">
-            Impulsa tu capital en un país de <span className="text-[#b5934a]">oportunidades</span>
-        </h3>
-        
-        <p className="text-[#001D3D] text-lg leading-relaxed mb-10">
-            En Grupo Campana abrimos las puertas a un Ecuador lleno de potencial. 
-            Nuestra experiencia en sectores clave como <span className="font-bold text-[#b5934a]">bienes raíces, salud, seguros y alimentación</span>, 
-            combinada con un modelo de gestión transparente y ágil, convierte cada proyecto en una oportunidad <span className="font-bold text-[#b5934a] uppercase text-sm tracking-wider">rentable y segura</span>.
-        </p>
+                    {/* Descripción con Borde Lateral Decorativo */}
+                    <div className="lg:col-span-6 relative lg:pl-12">
+                        {/* Línea decorativa vertical estilo Aceternity */}
+                        <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-gradient-to-b from-[#b5934a] via-[#001229]/20 to-transparent hidden lg:block" />
 
-        {/* Botón CTA Mejorado con Efecto de Resplandor */}
-        <div className="relative group w-fit">
-            <div className="absolute -inset-0.5 bg-gradient-to-r from-[#b5934a] to-[#e07a5f] rounded-xl blur opacity-30 group-hover:opacity-60 transition duration-1000"></div>
-            <button className="relative bg-[#001229] text-white px-10 py-4 rounded-xl font-bold text-lg transition-all flex items-center gap-3 hover:scale-[1.02] active:scale-[0.98]">
-                <span>INVIERTE EN ECUADOR AHORA</span>
-                <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
-            </button>
-        </div>
-    </div>
-</div>
+                        <h3 className="text-2xl md:text-3xl font-semibold text-[#001D3D] mb-6 leading-tight">
+                            Impulsa tu capital en un país de <span className="text-[#b5934a]">oportunidades</span>
+                        </h3>
+
+                        <p className="text-[#001D3D] text-lg leading-relaxed mb-10">
+                            En Grupo Campana abrimos las puertas a un Ecuador lleno de potencial.
+                            Nuestra experiencia en sectores clave como <span className="font-bold text-[#b5934a]">bienes raíces, salud, seguros y alimentación</span>,
+                            combinada con un modelo de gestión transparente y ágil, convierte cada proyecto en una oportunidad <span className="font-bold text-[#b5934a] uppercase text-sm tracking-wider">rentable y segura</span>.
+                        </p>
+
+                        {/* Botón CTA Mejorado con Efecto de Resplandor */}
+                        <div className="relative group w-fit">
+                            <div className="absolute -inset-0.5 bg-gradient-to-r from-[#b5934a] to-[#e07a5f] rounded-xl blur opacity-30 group-hover:opacity-60 transition duration-1000"></div>
+                            <button className="relative bg-[#001229] text-white px-10 py-4 rounded-xl font-bold text-lg transition-all flex items-center gap-3 hover:scale-[1.02] active:scale-[0.98]">
+                                <span>INVIERTE EN ECUADOR AHORA</span>
+                                <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
 
                 {/* Grid de 3 Pilares Estratégicos */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

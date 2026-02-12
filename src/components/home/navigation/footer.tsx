@@ -18,10 +18,10 @@ const Footer = () => {
                     <div className="flex flex-col items-start">
                         <div className="relative w-40 h-12 mb-6">
                             <Image
-                                src="/logo.png"
+                                src="/assets/logo.png"
                                 alt="Grupo Campana"
                                 fill
-                                className="object-contain" // Mantiene el logo blanco sobre fondo oscuro
+                                className="object-contain"
                                 priority
                             />
                         </div>
