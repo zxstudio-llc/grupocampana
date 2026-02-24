@@ -7,7 +7,7 @@ import { Menu } from "lucide-react";
 
 const Navbar = () => {
     return (
-        <header className="sticky top-0 z-[100] w-full bg-[#001229]">
+        <header className="fixed top-0 left-0 right-0 z-[9999] w-full bg-[#001229]">
             <Container>
                 <div className="flex h-20 items-center justify-between mx-auto md:max-w-screen-xl px-4">
 

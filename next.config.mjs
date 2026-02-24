@@ -12,6 +12,10 @@ const nextConfig = {
       { protocol: 'https', hostname: 'images.unsplash.com' },
       { protocol: 'https', hostname: 'homely-nextjs-tailwind.vercel.app' },
       { protocol: 'https', hostname: 'grupocampana.ec' },
+      { protocol: 'https', hostname: 'cdn.magicui.design'},
+      { protocol: 'https', hostname: 'player.vimeo.com'},
+      { protocol: 'https', hostname: 'vimeo.com'},
+      { protocol: 'https', hostname: 'youtube.com'}
     ],
   },
   reactStrictMode: false,

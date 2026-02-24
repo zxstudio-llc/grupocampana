@@ -19,17 +19,17 @@ const Footer = () => {
 
                         {/* Contenedor del Logo: Altura fija para alineación perfecta */}
                         <div className="flex items-center">
-                        <Link href="/" className="flex items-center">
-                            <Image
-                                src="/assets/logo.png"
-                                alt="Grupo Campana Logo"
-                                width={280}
-                                height={90}
-                                className="object-contain"
-                                priority
-                            />
-                        </Link>
-                    </div>
+                            <Link href="/" className="flex items-center">
+                                <Image
+                                    src="/assets/logo.png"
+                                    alt="Grupo Campana Logo"
+                                    width={280}
+                                    height={90}
+                                    className="object-contain"
+                                    priority
+                                />
+                            </Link>
+                        </div>
                         {/* Contenido de Texto */}
                         <div className="flex flex-col items-center lg:items-start">
                             <p className="text-gray-400 text-sm leading-relaxed max-w-[280px]">

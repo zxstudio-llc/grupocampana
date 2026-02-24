@@ -1,16 +1,11 @@
-import { Container, Wrapper } from "@/components";
 import CompanySection from "@/components/global/CompanySection";
 import ContactSection from "@/components/global/contact";
 import FAQSection from "@/components/global/faq";
-import Hero from "@/components/global/hero";
+import Hero from "@/components/global/hero/hero";
+import { RevealHero } from "@/components/global/hero/reveal-hero";
 import InvestmentsSection from "@/components/global/investment";
 import { AppleCardsCarouselDemo } from "@/components/home/Cards";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { LampContainer } from "@/components/ui/lamp";
 import { reviews } from "@/constants";
-import { ArrowRight} from "lucide-react";
-import Link from "next/link";
 
 const HomePage = () => {
 
@@ -19,7 +14,8 @@ const HomePage = () => {
 
     return (
         <section className="w-screen relative flex items-center justify-center flex-col px-0 md:px-0 py-0">
-            <Hero/>
+            {/* <Hero/> */}
+            <RevealHero/>
             <CompanySection/>
             <AppleCardsCarouselDemo/>
             <InvestmentsSection/>
