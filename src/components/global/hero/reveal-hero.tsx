@@ -1,11 +1,11 @@
 "use client";
 
-import AppleM5Hero from "./components/AppleM5Hero";
+import HeroScroll from "./components/hero-scroll";
 
 export function RevealHero() {
   return (
     <section className="w-full bg-black">
-      <AppleM5Hero videoSrc="https://player.vimeo.com/video/1093144245?background=1&autoplay=1&autopause=0&muted=1&loop=1&dnt=1">
+      <HeroScroll videoSrc="https://player.vimeo.com/video/1093144245?background=1&autoplay=1&autopause=0&muted=1&loop=1&dnt=1">
         <div className="flex flex-col items-center text-center space-y-6">
           <h2 className="text-6xl md:text-8xl font-bold text-white tracking-tighter">
           Transparencia, Innovación, Alianzas estratégicas.
@@ -16,7 +16,7 @@ export function RevealHero() {
             Calidad y rapidez sin esperas.
           </p>
         </div>
-      </AppleM5Hero>
+      </HeroScroll>
     </section>
   );
 }
