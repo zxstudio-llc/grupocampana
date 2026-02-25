@@ -2,17 +2,14 @@ import Icons from "@/components/global/icons"
 import Link from 'next/link'
 import Image from "next/image"
 import { Instagram, Linkedin } from "lucide-react"
+import { TextHoverEffect } from "./text-hover-effect"
 
 const Footer = () => {
     return (
         <footer className="bg-[#020617] border-t border-white/5 pt-24 pb-12 px-6 w-full relative overflow-hidden">
-            {/* Grid de fondo estilo Aceternity */}
-            <div className="absolute inset-0 z-0 opacity-20 [mask-image:radial-gradient(farthest-side_at_top,white,transparent)]">
-                <div className="absolute inset-0 bg-[linear-gradient(to_right,#1f2937_1px,transparent_1px),linear-gradient(to_bottom,#1f2937_1px,transparent_1px)] bg-[size:4rem_4rem]"></div>
-            </div>
 
             <div className="max-w-7xl mx-auto relative z-10">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 w-full items-start">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 w-full items-start mb-8">
 
                     {/* Columna 1: Branding Corporativo */}
                     <div className="lg:col-span-4 flex flex-col items-center lg:items-start text-center lg:text-left">
@@ -89,9 +86,12 @@ const Footer = () => {
                         </div>
                     </div>
                 </div>
+                <div className="flex items-center justify-center">
+                <TextHoverEffect text="CAMPANA" />
+                </div>
 
                 {/* Línea final y Copyright */}
-                <div className="mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+                <div className="mt-2 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
                     <p className="text-gray-500 text-xs tracking-tight">
                         &copy; {new Date().getFullYear()} Grupo Campana. 13 Unidades de Negocio impulsando el futuro.
                     </p>
