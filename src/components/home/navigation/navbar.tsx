@@ -111,14 +111,23 @@ const Navbar = () => {
                         <div className="md:hidden flex items-center">
                             <Sheet open={isOpen} onOpenChange={setIsOpen}>
                                 <SheetTrigger asChild>
-                                    <button
-                                        className={cn(
-                                            "p-2 text-white outline-none transition-opacity duration-300",
-                                            isOpen ? "opacity-0 pointer-events-none" : "opacity-100"
-                                        )}
-                                    >
-                                        <Menu className="w-6 h-6 drop-shadow-[0_2px_5px_rgba(0,0,0,0.5)]" />
-                                    </button>
+                                <Button
+    variant="ghost" // Usamos ghost para controlar el bg manualmente sin conflictos
+    size="icon"
+    onClick={() => setIsOpen(true)} // Asumiendo que esta es la función
+    className={cn(
+        "fixed right-6 z-50 rounded-full w-12 h-12 transition-all duration-300",
+        "bg-[#030910] hover:bg-[#05111d] border border-[#b5934a]/20",
+        "shadow-[0_4px_20px_rgba(0,0,0,0.4)] hover:shadow-[#b5934a]/20",
+        isOpen ? "opacity-0 scale-90 pointer-events-none" : "opacity-100 scale-100"
+    )}
+>
+    <Menu 
+        className="w-6 h-6 transition-transform duration-300 group-hover:scale-110" 
+        style={{ color: '#b5934a' }} // Color dorado de la marca
+    />
+    <span className="sr-only">Abrir menú</span>
+</Button>
                                 </SheetTrigger>
 
                                 <SheetContent
