@@ -26,7 +26,7 @@ const CompanySection = () => {
                         transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
                         className="block lg:col-span-5 relative group"
                     >
-                        <div className="relative w-full aspect-[4/5] rounded-3xl overflow-hidden bg-neutral-900">
+                        <div className="relative w-full aspect-[4/5] rounded-none md:rounded-3xl overflow-hidden bg-neutral-900">
                             <div className="relative w-[60%] md:w-[75%] lg:w-[85%] max-w-[550px] mx-auto pt-8">
                                 <Image
                                     src="/assets/logo.svg"
@@ -52,8 +52,6 @@ const CompanySection = () => {
                         {/* Firma / Cargo flotante con Acento de Color */}
                         <div className="absolute z-30 -bottom-6 -right-6 bg-[#001D3D]/90 backdrop-blur-xl p-6 rounded-2xl border border-[#b5934a]/30 shadow-[0_20px_50px_rgba(0,0,0,0.3)] group">
                             {/* Reflejo superior para dar volumen */}
-                            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#b5934a]/50 to-transparent" />
-
                             <p className="text-white font-bold text-xl leading-none tracking-tight drop-shadow-sm">
                                 Pablo Campana
                             </p>
@@ -72,7 +70,7 @@ const CompanySection = () => {
                     </motion.div>
 
                     {/* LADO DERECHO: Narrativa de Inversión */}
-                    <div className="lg:col-span-7 flex flex-col items-center lg:items-start">
+                    <div className="px-8 md:px-0 lg:col-span-7 flex flex-col items-center lg:items-start">
 
                         <motion.span
                             initial={{ opacity: 0 }}
