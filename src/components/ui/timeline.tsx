@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Tooltip } from "./tooltip-card";
 import { Button } from "./button";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -27,6 +28,8 @@ export const Timeline = ({
     const sectionRef = useRef<HTMLDivElement>(null);
     const horizontalRef = useRef<HTMLDivElement>(null);
     const progressLineRef = useRef<HTMLDivElement>(null);
+    const progressLineMobileRef = useRef<HTMLDivElement>(null);
+    const mobileContainerRef = useRef<HTMLDivElement>(null);
 
     useLayoutEffect(() => {
         if (!sectionRef.current || !horizontalRef.current) return;
@@ -72,6 +75,70 @@ export const Timeline = ({
                 }
             }, sectionRef);
 
+            mm.add("(max-width: 1023px)", () => {
+                const ctx = gsap.context(() => {
+                    gsap.fromTo(
+                        progressLineMobileRef.current,
+                        { height: "0%" },
+                        {
+                            height: "100%",
+                            ease: "none",
+                            scrollTrigger: {
+                                trigger: ".mobile-timeline-container",
+                                start: "top 20%",
+                                end: "bottom 80%",
+                                scrub: true,
+                            },
+                        }
+                    );
+                });
+                return () => ctx.revert();
+            });
+
+            return () => ctx.revert();
+        });
+
+        mm.add("(max-width: 1023px)", () => {
+            const container = mobileContainerRef.current;
+            const progressLine = progressLineMobileRef.current;
+
+            if (!container || !progressLine) return;
+
+            const ctx = gsap.context(() => {
+
+                // Línea vertical animada
+                gsap.fromTo(
+                    progressLine,
+                    { height: "0%" },
+                    {
+                        height: "100%",
+                        ease: "none",
+                        scrollTrigger: {
+                            trigger: container,
+                            start: "top 80%",
+                            end: "bottom 20%",
+                            scrub: true,
+                        },
+                    }
+                );
+
+                // Animación de cada item
+                gsap.utils.toArray<HTMLElement>(".timeline-item").forEach((item) => {
+                    gsap.from(item, {
+                        opacity: 0,
+                        y: 40,
+                        duration: 0.8,
+                        ease: "power2.out",
+                        scrollTrigger: {
+                            trigger: item,
+                            start: "top 85%",
+                            toggleActions: "play none none reverse",
+                        },
+                    });
+                });
+
+            }, sectionRef);
+
             return () => ctx.revert();
         });
 
@@ -81,7 +148,7 @@ export const Timeline = ({
     return (
         <section
             ref={sectionRef}
-            className="w-full bg-white relative overflow-hidden py-24 h-screen"
+            className="w-full bg-white relative py-24 lg:h-screen lg:overflow-hidden"
         >
             <div className="max-w-7xl mx-auto px-6 mt-20 text-center">
                 <h2 className="text-[#001D3D] text-5xl md:text-7xl font-bold tracking-tighter uppercase mb-6">
@@ -96,31 +163,45 @@ export const Timeline = ({
             </div>
 
             {/* MOBILE VERSION (Original Vertical Line) */}
-            <div className="lg:hidden relative max-w-7xl mx-auto pb-20 px-4">
-                {/* Línea vertical decorativa */}
-                <div className="absolute left-6 top-0 bottom-0 w-[2px] 
-          bg-[linear-gradient(to_bottom,var(--tw-gradient-stops))] 
-          from-transparent via-neutral-200 dark:via-neutral-700 
-          to-transparent" />
+            <div
+                ref={mobileContainerRef}
+                className="lg:hidden relative max-w-7xl mx-auto px-6 pb-20 mobile-timeline-container"
+            >
+                {/* Línea de fondo */}
+                <div className="absolute left-8 top-0 bottom-0 w-[2px] bg-neutral-100" />
 
-                {data.map((item) => (
-                    <div key={item.title} className="flex pt-12 relative">
-                        <div className="w-6 flex justify-center">
-                            <div className="h-4 w-4 rounded-full bg-neutral-300 dark:bg-neutral-700" />
-                        </div>
-                        <div key={`${item.title}-mobile-content`} className="pl-6">
-                            <h3 className="text-xl font-bold text-neutral-500 dark:text-neutral-500 mb-2">
-                                {item.title}
+                {/* Línea progreso animada */}
+                <div
+                    ref={progressLineMobileRef}
+                    className="absolute left-8 top-0 w-[2px] bg-[#b8912e] z-10 origin-top"
+                />
 
-                                {item.content}
-                            </h3>
+                <div className="relative z-20">
+                    {data.map((item) => (
+                        <div
+                            key={item.title}
+                            className="timeline-item flex pt-12 relative"
+                        >
+                            <div className="w-4 flex justify-center mr-6">
+                                <div className="h-4 w-4 rounded-full bg-white border-2 border-[#b8912e] shadow-sm" />
+                            </div>
+
+                            <div className="flex-1">
+                                <h3 className="text-[#b8912e] font-bold tracking-[0.2em] text-sm uppercase mb-2">
+                                    {item.title}
+                                </h3>
+
+                                <div className="text-[#001D3D] text-lg leading-relaxed font-medium">
+                                    {item.content}
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
 
             {/* DESKTOP VERSION */}
-            <div className="hidden lg:block relative">                
+            <div className="hidden lg:block relative">
                 <div
                     className="absolute inset-0 left-0 right-0 h-[2px]
                     bg-[linear-gradient(to_right,var(--tw-gradient-stops))] 
@@ -148,10 +229,10 @@ export const Timeline = ({
                                 key={item.title}
                                 className="min-w-[200px] flex-shrink-0 flex flex-col items-center justify-center relative"
                             >
-                                
+
                                 <h3 className="text-xl font-medium text-neutral-800  transition-colors duration-500 hover:text-[#b8912e]/20 select-none">
-                                        {item.title}
-                                    </h3>
+                                    {item.title}
+                                </h3>
                                 <Tooltip
                                     containerClassName="cursor-pointer"
                                     content={
@@ -175,15 +256,15 @@ export const Timeline = ({
             </div>
 
             <div className="max-w-7xl mx-auto px-6 text-center">
-            <Button
-                asChild
-                className="px-6 py-6 border-[#b5934a]/30 hover:bg-[#b5934a] transition-all group rounded-full bg-[#001D3D] w-full md:w-fit"
+                <Button
+                    asChild
+                    className="px-6 py-6 border-[#b5934a]/30 hover:bg-[#b5934a] transition-all group rounded-full bg-[#001D3D] w-full md:w-fit"
                 >
-                <Link href="/historia" target="_blank">
-                    <span className="font-bold tracking-tight text-white">
-                    Conoce Nuestra Historia
-                    </span>
-                </Link>
+                    <Link href="/historia" target="_blank">
+                        <span className="font-bold tracking-tight text-white">
+                            Conoce Nuestra Historia
+                        </span>
+                    </Link>
                 </Button>
             </div>
         </section>
