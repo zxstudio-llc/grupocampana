@@ -156,9 +156,16 @@ export const Timeline = ({
                 </h2>
 
                 {description && (
-                    <p className="text-[#001D3D] text-xl max-w-4xl mx-auto">
-                        {description}
-                    </p>
+                    <p 
+                    className="text-[#001D3D] text-base md:text-xl max-w-4xl mx-auto"
+                    style={{ 
+                        textAlign: "justify", 
+                        textAlignLast: "center", 
+                        textJustify: "inter-word" 
+                    }}
+                >
+                    {description}
+                </p>
                 )}
             </div>
 
@@ -191,7 +198,12 @@ export const Timeline = ({
                                     {item.title}
                                 </h3>
 
-                                <div className="text-[#001D3D] text-lg leading-relaxed font-medium">
+                                <div className="text-[#001D3D] text-lg leading-relaxed font-medium"
+                                    style={{ 
+                                        textAlign: "justify", 
+                                        textJustify: "inter-word" 
+                                    }}
+                                >
                                     {item.content}
                                 </div>
                             </div>

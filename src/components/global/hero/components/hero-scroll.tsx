@@ -52,7 +52,7 @@ export default function HeroScroll({ videoSrc, children }: Props) {
                 scrollTrigger: {
                     trigger: sectionRef.current,
                     start: "top top",
-                    end: "+=1000%",
+                    end: "+=800%",
                     scrub: true,
                     pin: true,
                     anticipatePin: 1,
@@ -98,7 +98,6 @@ export default function HeroScroll({ videoSrc, children }: Props) {
                     ease: "none",
                 }, "-=0.2"
             );
-            tl.to({}, { duration: 0.5 });
             
             tl.to(".reveal-rotate", {
                 opacity: 1,
@@ -106,7 +105,7 @@ export default function HeroScroll({ videoSrc, children }: Props) {
                 duration: 1,
                 ease: "power2.out"
             });
-            tl.to({}, { duration: 2 });
+            tl.to({}, { duration: 0.2 });
 
             tl.to(".reveal-rotate", {
                 opacity: 0,
@@ -122,7 +121,7 @@ export default function HeroScroll({ videoSrc, children }: Props) {
                 ease: "power2.out"
             }, ">");
 
-            tl.to({}, { duration: 2 });tl.to({}, { duration: 2 });
+            tl.to({}, { duration: 0.2 });
             
             // 4. HIDE TOTAL: Una vez pasa ese "tiempo" de scroll, ocultamos todo
             tl.to([".reveal-description", whiteLogoRef.current], {

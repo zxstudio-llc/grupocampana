@@ -118,7 +118,7 @@ export function ActivosSection() {
                 <h2 className="text-[#001D3D] text-5xl md:text-7xl font-bold tracking-tighter uppercase mb-6">
                     Activos <span className="text-[#b5934a]">estratégicos</span>
                 </h2>
-                <p className="text-[#001D3D] text-xl max-w-2xl mx-auto">
+                <p className="text-[#001D3D] text-lg sm:text-xl md:text-2xl  max-w-2xl mx-auto font-bold">
                     Cifras que respaldan nuestra solidez y compromiso con el desarrollo económico del país.
                 </p>
             </div>
