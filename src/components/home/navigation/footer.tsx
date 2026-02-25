@@ -21,7 +21,7 @@ const Footer = () => {
                         <div className="flex items-center">
                             <Link href="/" className="flex items-center">
                                 <Image
-                                    src="/assets/logo.png"
+                                     src="/assets/logo.svg"
                                     alt="Grupo Campana Logo"
                                     width={280}
                                     height={90}

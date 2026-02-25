@@ -45,7 +45,7 @@ const Navbar = () => {
                 "fixed top-0 left-0 right-0 z-[9999] w-full transition-all duration-500",
                 isScrolled
                     ? "md:bg-[#001229]/70 md:backdrop-blur-lg md:border-b md:border-white/10 py-2 md:shadow-2xl bg-transparent"
-                    : "bg-[#001229]/40 backdrop-blur-lg py-2"
+                    : "bg-transparent md:bg-[#001229]/40 md:backdrop-blur-lg py-2"
             )}
         >
             <Container>
@@ -93,19 +93,19 @@ const Navbar = () => {
                     </nav>
 
                     <div className="flex items-center gap-4">
-                    <Button
-                                            asChild
-                                            className={cn(
-                                                "hidden sm:flex bg-[#b5934a] text-white px-6 py-2 rounded-full text-sm font-bold border border-white/10 hover:bg-white hover:text-[#001229] transition-all duration-300 shadow-lg"
-                                            )}
-                                        >
-                                            <Link
-                                                href="/contact-us"
-                                                onClick={() => setIsOpen(false)}
-                                            >
-                                                Contact Us
-                                            </Link>
-                                        </Button>
+                        <Button
+                            asChild
+                            className={cn(
+                                "hidden sm:flex bg-[#b5934a] text-white px-6 py-2 rounded-full text-sm font-bold border border-white/10 hover:bg-white hover:text-[#001229] transition-all duration-300 shadow-lg"
+                            )}
+                        >
+                            <Link
+                                href="/contact-us"
+                                onClick={() => setIsOpen(false)}
+                            >
+                                Contact Us
+                            </Link>
+                        </Button>
 
                         {/* Mobile Menu (Sheet) */}
                         <div className="md:hidden flex items-center">
@@ -123,7 +123,8 @@ const Navbar = () => {
 
                                 <SheetContent
                                     side="right"
-                                    className="w-[300px] bg-white/20 backdrop-blur-xl border-l border-white/30 p-0 shadow-2xl"
+                                    /* Añadimos flex y flex-col para controlar el empuje vertical */
+                                    className="w-[300px] bg-white/10 backdrop-blur-md border-l border-white/30 p-0 shadow-2xl flex flex-col"
                                 >
                                     {/* LOGO CENTRADO EN EL SHEET */}
                                     <SheetHeader className="flex flex-col items-center justify-center pt-4 pb-4 border-b border-white/20">
@@ -139,46 +140,44 @@ const Navbar = () => {
                                         <SheetDescription className="hidden" />
                                     </SheetHeader>
 
-                                    <div className="flex flex-col h-full pt-12 px-6 gap-4">
+                                    {/* El div de links ahora tiene flex-1 para ocupar todo el espacio disponible */}
+                                    <div className="grid gap-2 flex-1 auto-rows-min pt-6 px-4">
                                         {navLinks.map((link) => {
                                             const isActive = pathname === link.href;
                                             return (
-                                                <Link
+                                                <Button
                                                     key={link.name}
-                                                    href={link.href}
-                                                    onClick={() => setIsOpen(false)}
+                                                    asChild
+                                                    variant="ghost"
                                                     className={cn(
-                                                        "w-full px-6 py-4 rounded-xl text-lg font-bold transition-all duration-300",
+                                                        "w-full justify-start px-4 py-4 rounded-xl text-md transition-all duration-300 border-none",
                                                         isActive
-                                                            ? "bg-[#b5934a] text-white shadow-lg"
-                                                            : "text-[#001229] hover:bg-white/40"
+                                                            ? "bg-[#b5934a] text-white shadow-lg hover:bg-[#b5934a]/90 hover:text-white"
+                                                            : "text-white hover:bg-white/40 bg-transparent shadow-none"
                                                     )}
                                                 >
-                                                    {link.name}
-                                                </Link>
+                                                    <Link
+                                                        href={link.href}
+                                                        onClick={() => setIsOpen(false)}
+                                                    >
+                                                        {link.name}
+                                                    </Link>
+                                                </Button>
                                             );
                                         })}
-
-                                        <div className="mt-auto mb-10">
-                                            <Link
-                                                href="/contact-us"
-                                                onClick={() => setIsOpen(false)}
-                                                className="block w-full text-center bg-[#001229] text-white py-4 rounded-xl font-bold shadow-xl"
-                                            >
-                                                Get in Touch
-                                            </Link>
-                                        </div>
                                     </div>
-                                    <SheetFooter>
+
+                                    {/* El SheetFooter ahora siempre se mantendrá al final gracias al flex-1 de arriba */}
+                                    <SheetFooter className="pb-8 pt-4 px-4">
                                         <Button
                                             asChild
-                                            className="w-full h-auto py-4 rounded-xl font-bold shadow-xl bg-[#001229] hover:bg-[#b5934a] text-white transition-all duration-300 border-none"
+                                            className="w-full rounded-xl font-bold shadow-xl bg-[#001229] hover:bg-[#b5934a] text-white transition-all duration-300 border-none h-12"
                                         >
                                             <Link
                                                 href="/contact-us"
                                                 onClick={() => setIsOpen(false)}
                                             >
-                                                Get in Touch
+                                                Contactanos
                                             </Link>
                                         </Button>
                                     </SheetFooter>

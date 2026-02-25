@@ -52,7 +52,7 @@ export default function HeroScroll({ videoSrc, children }: Props) {
                 scrollTrigger: {
                     trigger: sectionRef.current,
                     start: "top top",
-                    end: "+=2500%",
+                    end: "+=1000%",
                     scrub: true,
                     pin: true,
                     anticipatePin: 1,
@@ -88,7 +88,7 @@ export default function HeroScroll({ videoSrc, children }: Props) {
 
             tl.set(maskLogoRef.current?.container, { 
                     autoAlpha: 0
-                }, "<+=0.01"
+                }, "<+=0.02"
             );
 
             // Text & CTA Position 
@@ -98,7 +98,40 @@ export default function HeroScroll({ videoSrc, children }: Props) {
                     ease: "none",
                 }, "-=0.2"
             );
-            tl.to({}, { duration: 1 });
+            tl.to({}, { duration: 0.5 });
+            
+            tl.to(".reveal-rotate", {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: "power2.out"
+            });
+            tl.to({}, { duration: 2 });
+
+            tl.to(".reveal-rotate", {
+                opacity: 0,
+                y: -50,
+                duration: 1,
+                filter: "blur(10px)",
+                ease: "power2.in"
+            });
+            
+            tl.to(".reveal-description", {
+                opacity: 1,
+                duration: 1,
+                ease: "power2.out"
+            }, ">");
+
+            tl.to({}, { duration: 2 });tl.to({}, { duration: 2 });
+            
+            // 4. HIDE TOTAL: Una vez pasa ese "tiempo" de scroll, ocultamos todo
+            tl.to([".reveal-description", whiteLogoRef.current], {
+                opacity: 0,
+                scale: 0.9,
+                filter: "blur(20px)",
+                duration: 1.5,
+                ease: "power2.inOut"
+            });
         }, sectionRef);
 
         return () => ctx.revert();
@@ -127,7 +160,7 @@ export default function HeroScroll({ videoSrc, children }: Props) {
                         <path d="M1066.7,212l-71.3-100c-1.5-2.2-5-1-5,1.5v96.8c0,1.5-1.3,2.7-2.7,2.7h-31.9c-3.9,0-7-3.1-7-7V32.9c0-3.9,3.1-7,7-7h28.8c.9,0,1.7.4,2.2,1.2l71.3,100.3c1.5,2.2,5,1,5-1.5V28.8c0-1.5,1.3-2.7,2.7-2.7h31.9c3.9,0,7,3.1,7,7v173.1c0,3.9-3.1,7-7,7h-28.8c-.9,0-1.7-.4-2.2-1.2h0Z" />
                     </svg>
                 </div>
-                <div ref={textRef} className="absolute inset-0 flex items-center justify-center text-white text-center px-6 pointer-events-none" >
+                <div ref={textRef} className="absolute inset-0 flex flex-col items-center justify-center text-white text-center px-6 pointer-events-none" >
                     {children}
                 </div>
             </div>

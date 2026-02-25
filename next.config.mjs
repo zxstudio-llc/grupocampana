@@ -15,7 +15,8 @@ const nextConfig = {
       { protocol: 'https', hostname: 'cdn.magicui.design'},
       { protocol: 'https', hostname: 'player.vimeo.com'},
       { protocol: 'https', hostname: 'vimeo.com'},
-      { protocol: 'https', hostname: 'youtube.com'}
+      { protocol: 'https', hostname: 'youtube.com'},
+      { protocol: 'https', hostname: 'assets.aceternity.com'}
     ],
   },
   reactStrictMode: false,
