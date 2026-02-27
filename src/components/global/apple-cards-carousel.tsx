@@ -7,10 +7,10 @@ import React, {
   useContext,
 } from "react";
 import { cn } from "@/lib/utils";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useInView } from "framer-motion";
 import Image, { ImageProps } from "next/image";
 import { useOutsideClick } from "@/hooks/use-outside-click";
-import { ChevronLeft, ChevronRight, X, Play, Pause } from "lucide-react";
+import { ChevronLeft, ChevronRight, X, Play, Pause, RotateCcw } from "lucide-react";
 
 const AUTO_PLAY_DURATION = 5000;
 
@@ -27,27 +27,31 @@ type Card = {
 
 export const CarouselContext = createContext<{
   onCardClose: (index: number) => void;
+  onCardOpen: () => void;
   currentIndex: number;
 }>({
   onCardClose: () => { },
+  onCardOpen: () => { },
   currentIndex: 0,
 });
 
 export const Carousel = ({ items }: CarouselProps) => {
   const carouselRef = useRef<HTMLDivElement>(null);
+  const [cardOpen, setCardOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
+  const [hasEnded, setHasEnded] = useState(false)
+  const [controlsVisible, setControlsVisible] = useState(false);
+  const [controlsStage, setControlsStage] = useState<"hidden" | "intro" | "final">("hidden");
 
   // FUNCIÓN CORREGIDA: Calcula el desplazamiento por tarjeta exacta
-  const scrollTo = (index: number) => {
+  const scrollTo = (index: number, smooth = true) => {
     if (!carouselRef.current) return;
 
     const container = carouselRef.current;
     const cardElement = container.firstElementChild?.firstElementChild as HTMLElement;
-
     if (!cardElement) return;
 
-    // Ancho de la tarjeta + el gap (16px es gap-4)
     const cardFullWidth = cardElement.offsetWidth + 16;
 
     let targetIndex = index;
@@ -56,21 +60,82 @@ export const Carousel = ({ items }: CarouselProps) => {
 
     container.scrollTo({
       left: targetIndex * cardFullWidth,
-      behavior: "smooth",
+      behavior: smooth ? "smooth" : "auto",
     });
 
     setCurrentIndex(targetIndex);
   };
 
   useEffect(() => {
-    let interval: NodeJS.Timeout;
-    if (isPlaying) {
-      interval = setInterval(() => {
-        scrollTo(currentIndex + 1);
-      }, AUTO_PLAY_DURATION);
+    if (controlsVisible) {
+      setControlsStage("intro");
+
+      const timer = setTimeout(() => {
+        setControlsStage("final");
+      }, 600); // pausa Apple-like
+
+      return () => clearTimeout(timer);
+    } else {
+      setControlsStage("hidden");
     }
+  }, [controlsVisible]);
+
+  useEffect(() => {
+    if (!controlsVisible || !isPlaying || cardOpen) return;
+
+    const interval = setInterval(() => {
+      scrollTo(currentIndex + 1);
+    }, AUTO_PLAY_DURATION);
+
     return () => clearInterval(interval);
-  }, [isPlaying, currentIndex, items.length]);
+  }, [controlsVisible, isPlaying, currentIndex]);
+
+  useEffect(() => {
+    if (!isPlaying) return
+
+    if (currentIndex === items.length - 1) {
+      const timer = setTimeout(() => {
+        setIsPlaying(false)
+        setHasEnded(true)
+      }, AUTO_PLAY_DURATION)
+
+      return () => clearTimeout(timer)
+    }
+  }, [currentIndex, isPlaying])
+
+  useEffect(() => {
+    const handleVisibility = () => {
+      if (!carouselRef.current) return;
+
+      const rect = carouselRef.current.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+
+      const visibleHeight =
+        Math.min(rect.bottom, viewportHeight) - Math.max(rect.top, 0);
+
+      const ratio = visibleHeight / rect.height;
+
+      const offsetFromCenter =
+        Math.abs(rect.top + rect.height / 2 - viewportHeight / 2);
+
+      // Visible al menos 20% Y centrado dentro de 100px
+      if (ratio >= 0.2 && offsetFromCenter <= 100) {
+        setControlsVisible(true);
+      } else {
+        setControlsVisible(false);
+      }
+    };
+
+    handleVisibility();
+
+    window.addEventListener("scroll", handleVisibility);
+    window.addEventListener("resize", handleVisibility);
+
+    return () => {
+      window.removeEventListener("scroll", handleVisibility);
+      window.removeEventListener("resize", handleVisibility);
+    };
+  }, []);
 
   const handleScroll = () => {
     if (!carouselRef.current) return;
@@ -87,10 +152,23 @@ export const Carousel = ({ items }: CarouselProps) => {
   };
 
   return (
-    <CarouselContext.Provider value={{ onCardClose: scrollTo, currentIndex }}>
+    <CarouselContext.Provider
+      value={{
+        onCardClose: (index) => {
+          setCardOpen(false);
+          setIsPlaying(true);
+          scrollTo(index);
+        },
+        onCardOpen: () => {
+          setCardOpen(true);
+          setIsPlaying(false);
+        },
+        currentIndex,
+      }}
+    >
       <div className="relative w-full group">
         <div
-          className="flex w-full overflow-x-scroll snap-x snap-mandatory scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          className="flex w-full overflow-x-scroll snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           ref={carouselRef}
           onScroll={handleScroll}
         >
@@ -103,57 +181,104 @@ export const Carousel = ({ items }: CarouselProps) => {
             ))}
           </div>
         </div>
-
-        {/* Navegación */}
-        <div className="absolute inset-y-0 left-4 md:left-10 flex items-center opacity-0 group-hover:opacity-100 transition-opacity z-30">
-          <button
-            onClick={() => { setIsPlaying(false); scrollTo(currentIndex - 1); }}
-            className="h-12 w-12 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center text-white hover:bg-white/20 transition-all"
+        {/* controles del carrusel */}
+        <div>
+          {/* Navegación */}
+          <motion.div
+            initial={false}
+            animate={
+              controlsStage !== "hidden"
+                ? { opacity: 1, y: 0 }
+                : { opacity: 0, y: 20 }
+            }
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute bottom-10 left-0 w-full z-40 pointer-events-none"
           >
-            <ChevronLeft className="h-6 w-6" />
-          </button>
-        </div>
-        <div className="absolute inset-y-0 right-4 md:right-10 flex items-center opacity-0 group-hover:opacity-100 transition-opacity z-30">
-          <button
-            onClick={() => { setIsPlaying(false); scrollTo(currentIndex + 1); }}
-            className="h-12 w-12 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center text-white hover:bg-white/20 transition-all"
-          >
-            <ChevronRight className="h-6 w-6" />
-          </button>
-        </div>
+            <div className="w-full max-w-[1200px] mx-auto pointer-events-auto flex justify-center">
 
-        {/* Indicadores con Barra de Progreso */}
-        <div className="mt-8 flex items-center justify-center gap-6">
-          <div className="flex items-center gap-3 bg-neutral-800/50 backdrop-blur-xl px-4 py-2.5 rounded-full border border-white/10">
-            {items.map((_, index) => (
-              <button
-                key={"dot-" + index}
-                onClick={() => { setIsPlaying(false); scrollTo(index); }}
-                className="relative h-1.5 bg-white/20 rounded-full overflow-hidden transition-all duration-300"
-                style={{ width: currentIndex === index ? "40px" : "8px" }}
-              >
-                {currentIndex === index && isPlaying && (
-                  <motion.div
-                    key={`progress-${index}`}
-                    initial={{ width: "0%" }}
-                    animate={{ width: "100%" }}
-                    transition={{ duration: AUTO_PLAY_DURATION / 1000, ease: "linear" }}
-                    className="absolute inset-y-0 left-0 bg-white"
-                  />
-                )}
-                {currentIndex === index && !isPlaying && (
-                  <div className="absolute inset-0 bg-white" />
-                )}
-              </button>
-            ))}
-          </div>
+              <div className="flex items-center gap-4">
 
-          <button
-            onClick={() => setIsPlaying(!isPlaying)}
-            className="h-10 w-10 flex items-center justify-center rounded-full bg-neutral-800/50 backdrop-blur-xl border border-white/10 text-white"
-          >
-            {isPlaying ? <Pause size={18} fill="currentColor" /> : <Play size={18} fill="currentColor" className="ml-0.5" />}
-          </button>
+                {/* PROGRESS CONTAINER */}
+                <motion.div
+                  initial={false}
+                  animate={
+                    controlsStage === "final"
+                      ? { opacity: 1, scale: 1 }
+                      : { opacity: 0, scale: 0.95 }
+                  }
+                  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                  className="flex items-center gap-3 h-10
+                 bg-[#00122D]/70 backdrop-blur-sm 
+                 px-4 py-2.5 rounded-full 
+                 border border-[#00122D]/20"
+                >
+                  {items.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => {
+                        setIsPlaying(false);
+                        setHasEnded(false);
+                        scrollTo(index, false);
+                      }}
+                      className="relative h-1.5 bg-[#F1BA0A]/20 rounded-full overflow-hidden transition-all duration-300"
+                      style={{
+                        width: currentIndex === index ? "40px" : "8px",
+                      }}
+                    >
+                      {currentIndex === index && isPlaying && !hasEnded && (
+                        <motion.div
+                          key={`progress-${index}`}
+                          initial={{ width: 0 }}
+                          animate={{ width: "100%" }}
+                          transition={{
+                            duration: AUTO_PLAY_DURATION / 1000,
+                            ease: "linear",
+                          }}
+                          className="absolute inset-y-0 left-0 bg-[#F1BA0A]"
+                        />
+                      )}
+
+                      {currentIndex === index && !isPlaying && !hasEnded && (
+                        <div className="absolute inset-0 bg-[#F1BA0A]" />
+                      )}
+                    </button>
+                  ))}
+                </motion.div>
+
+                {/* PLAY / PAUSE / REPLAY */}
+                <motion.button
+                  onClick={() => {
+                    if (hasEnded) {
+                      scrollTo(0);
+                      setHasEnded(false);
+                      setIsPlaying(true);
+                      return;
+                    }
+                    setIsPlaying(!isPlaying);
+                  }}
+                  initial={false}
+                  animate={{
+                    opacity: controlsStage === "final" ? 1 : 0,
+                  }}
+                  transition={{ duration: 0.6 }}
+                  className="h-10 w-10 flex items-center justify-center 
+                 rounded-full 
+                 bg-[#00122D]/70 backdrop-blur-sm
+                 border border-[#00122D]/20 
+                 text-[#F1BA0A]"
+                >
+                  {hasEnded ? (
+                    <RotateCcw size={18} />
+                  ) : isPlaying ? (
+                    <Pause size={18} fill="currentColor" />
+                  ) : (
+                    <Play size={18} fill="currentColor" className="ml-0.5" />
+                  )}
+                </motion.button>
+
+              </div>
+            </div>
+          </motion.div>
         </div>
       </div>
     </CarouselContext.Provider>
@@ -181,14 +306,14 @@ export const Card = ({ card, index, layout = false }: { card: Card; index: numbe
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/90 backdrop-blur-2xl"
+              className="fixed inset-0 bg-black/90 backdrop-blur-xl"
               onClick={handleClose}
             />
 
             <motion.div
               ref={containerRef}
               layoutId={layout ? `card-${card.title}` : undefined}
-              className="relative z-[60] w-full max-w-7xl rounded-[32px] bg-[#030b14] border border-white/10 overflow-hidden h-[90vh] md:h-[80vh] flex flex-col md:flex-row mt-8 md:mt-20"
+              className="relative z-[60] w-full max-w-7xl rounded-[32px] bg-[#030b14] overflow-hidden h-[90vh] md:h-[80vh] flex flex-col md:flex-row mt-8 md:mt-20"
             >
               {/* Botón Cerrar */}
               <button
@@ -210,7 +335,7 @@ export const Card = ({ card, index, layout = false }: { card: Card; index: numbe
       <motion.button
         layoutId={layout ? `card-${card.title}` : undefined}
         onClick={() => setOpen(true)}
-        className="relative group h-[500px] w-[300px] md:h-[700px] md:w-[1200px] flex flex-col items-start justify-start overflow-hidden rounded-[32px] bg-neutral-900 border"
+        className="relative group h-[500px] w-[300px] md:h-[700px] md:w-[1200px] flex flex-col items-start justify-start overflow-hidden rounded-[32px] bg-neutral-900"
       >
         <div className="absolute inset-0 z-20 bg-gradient-to-b from-black/80 via-transparent to-black/20" />
         <div className="relative z-30 p-10 md:p-14 text-left">
