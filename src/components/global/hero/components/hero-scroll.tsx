@@ -116,12 +116,12 @@ export default function HeroScroll({ videoSrc, children }: Props) {
     }, []);
 
     return (
-        <section ref={sectionRef} className="relative bg-black">
-            <div className="h-screen overflow-hidden relative transition-opacity duration-700 bg-[#00122d]" style={{ opacity: isVideoReady ? 1 : 0 }}>
+        <section ref={sectionRef} className="relative bg-[#030910]">
+            <div className="h-screen overflow-hidden relative transition-opacity duration-700 bg-[#030910]" style={{ opacity: isVideoReady ? 1 : 0 }}>
                 <iframe
                     ref={videoRef}
                     src={`${videoSrc}?background=1&autoplay=1&loop=1&muted=1&transparent=0`}
-                    className="absolute top-1/2 left-1/2 min-w-full min-h-full w-[177.77vh] h-[100dvh] -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+                    className="absolute top-1/2 left-1/2 min-w-full min-h-full w-[177.77vh] h-[100dvh] -translate-x-1/2 -translate-y-1/2 pointer-events-none mt-10"
                     style={{ width: '177.77vh', height: '100dvh', objectFit: 'cover' }}
                     allow="autoplay; fullscreen"
                     onLoad={() => setIsVideoReady(true)}
