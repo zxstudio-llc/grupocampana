@@ -6,7 +6,7 @@ import HeroScroll from "./components/hero-scroll";
 export function RevealHero() {
   return (
     <section className="w-full bg-[#030910]">
-      <HeroScroll videoSrc="https://player.vimeo.com/video/1168947259">
+      <HeroScroll videoSrcDesktop="https://player.vimeo.com/video/1168947259" videoSrcMobile="https://player.vimeo.com/video/1168949161">
         <div className="reveal-rotate opacity-0 -mt-40 md:mt-0 md:translate-y-10 absolute">
           {/* <WordRotate
             className="text-5xl md:text-8xl font-bold text-white tracking-tighter uppercase"

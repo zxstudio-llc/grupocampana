@@ -8,17 +8,26 @@ import { MaskedLogo, MaskedLogoHandle } from "./masked-logo";
 gsap.registerPlugin(ScrollTrigger);
 
 interface Props {
-    videoSrc: string;
+    videoSrcDesktop: string;
+    videoSrcMobile: string;
     children: React.ReactNode;
 }
 
-export default function HeroScroll({ videoSrc, children }: Props) {
+export default function HeroScroll({ videoSrcDesktop, videoSrcMobile, children }: Props) {
     const sectionRef = useRef<HTMLDivElement>(null);
     const maskLogoRef = useRef<MaskedLogoHandle>(null);
     const whiteLogoRef = useRef<SVGSVGElement>(null);
     const [isVideoReady, setIsVideoReady] = useState(false);
     const videoRef = useRef<HTMLIFrameElement>(null);
     const textRef = useRef<HTMLDivElement>(null);
+    const [isMobile, setIsMobile] = useState(false);
+
+    useLayoutEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth < 768);
+        handleResize();
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
 
     useLayoutEffect(() => {
         if (!sectionRef.current || !maskLogoRef.current) return;
@@ -30,7 +39,7 @@ export default function HeroScroll({ videoSrc, children }: Props) {
             const bbox = logo.getBBox();
             const vw = window.innerWidth;
             const vh = window.innerHeight;
-            const isMobile = vw < 768;
+
             const scaleX = vw / bbox.width;
             const scaleY = vh / bbox.height;
             const coverScale = isMobile ? scaleX * 0.9 : Math.max(scaleX, scaleY);
@@ -40,11 +49,7 @@ export default function HeroScroll({ videoSrc, children }: Props) {
             const yOffset = isMobile ? -120 : -90;
             const endScale = targetWidth / bbox.width;
 
-            gsap.set(logo, {
-                scale: startScale,
-                transformOrigin: "50% 50%",
-            });
-
+            gsap.set(logo, { scale: startScale, transformOrigin: "50% 50%" });
             gsap.set(whiteLogoRef.current, { opacity: 0 });
             gsap.set(textRef.current, { opacity: 0, y: 40 });
 
@@ -59,61 +64,26 @@ export default function HeroScroll({ videoSrc, children }: Props) {
                 },
             });
 
-            // SVG Mask 
-            tl.to(logo, {
-                scale: endScale,
-                ease: "none",
-            });
-
-            // Video Fade
-            tl.to(videoRef.current, {
-                opacity: 0,
-                ease: "none",
-            }, 0.3
-            );
-
-            // White Logo Transition
-            tl.to(whiteLogoRef.current, {
-                opacity: 1,
-                ease: "none",
-            }, 0.5
-            );
-
-            // Logo Final Position
-            tl.to(whiteLogoRef.current, {
-                scale: 1,
-                ease: "none",
-            });
-
-            tl.set(maskLogoRef.current?.container, {
-                autoAlpha: 0
-            });
-
-            // Text & CTA Position 
-            tl.to(textRef.current, {
-                opacity: 1,
-                y: 90,
-                ease: "none",
-            });
-
-            tl.to(".reveal-description", {
-                opacity: 1,
-                duration: 1,
-                ease: "power2.out"
-            });
-
-            // 4. HIDE TOTAL: Una vez pasa ese "tiempo" de scroll, ocultamos todo
+            tl.to(logo, { scale: endScale, ease: "none" });
+            tl.to(videoRef.current, { opacity: 0, ease: "none" }, 0.3);
+            tl.to(whiteLogoRef.current, { opacity: 1, ease: "none" }, 0.5);
+            tl.to(whiteLogoRef.current, { scale: 1, ease: "none" });
+            tl.set(maskLogoRef.current?.container, { autoAlpha: 0 });
+            tl.to(textRef.current, { opacity: 1, y: 90, ease: "none" });
+            tl.to(".reveal-description", { opacity: 1, duration: 1, ease: "power2.out" });
             tl.to([".reveal-description", whiteLogoRef.current], {
                 opacity: 0,
                 scale: 0.9,
                 filter: "blur(20px)",
                 duration: 1.5,
-                ease: "power2.inOut"
+                ease: "power2.inOut",
             });
         }, sectionRef);
 
         return () => ctx.revert();
-    }, []);
+    }, [isMobile]);
+
+    const videoSrc = isMobile ? videoSrcMobile : videoSrcDesktop;
 
     return (
         <section ref={sectionRef} className="relative bg-[#030910]">
@@ -121,8 +91,13 @@ export default function HeroScroll({ videoSrc, children }: Props) {
                 <iframe
                     ref={videoRef}
                     src={`${videoSrc}?background=1&autoplay=1&loop=1&muted=1&transparent=0`}
-                    className="absolute top-1/2 left-1/2 min-w-full min-h-full w-[177.77vh] h-[100dvh] -translate-x-1/2 -translate-y-1/2 pointer-events-none mt-10"
-                    style={{ width: '177.77vh', height: '100dvh', objectFit: 'cover' }}
+                    className={`absolute top-1/2 left-1/2 min-w-full min-h-full -translate-x-1/2 -translate-y-1/2 pointer-events-none mt-0 md:mt-10
+                        ${isMobile ? "w-[100vw] h-[56.25vw]" : "w-[177.77vh] h-[100dvh]"}`}
+                    style={{
+                        objectFit: "cover",
+                        width: isMobile ? "100vw" : "177.77vh",
+                        height: isMobile ? "56.25vw" : "100dvh",
+                    }}
                     allow="autoplay; fullscreen"
                     onLoad={() => setIsVideoReady(true)}
                 />
