@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import {
@@ -10,6 +10,7 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
+import gsap from "gsap";
 
 interface ShowcaseItem {
   title: string;
@@ -55,95 +56,186 @@ export const Showcase = ({ content }: ShowcaseProps) => {
 /* DESKTOP VERSION */
 /* ============================= */
 
-const DesktopUI = ({
+export const DesktopUI = ({
   content,
-  activeCard,      // usado SOLO para content display
+  activeCard,
   setActiveCard,
   nextCard,
   prevCard,
 }: any) => {
+  const COLLAPSED_WIDTH = 320;
+  const COLLAPSED_HEIGHT = 56;
+
+  const EXPANDED_WIDTH = 420;
+  const EXPANDED_HEIGHT = 156;
 
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
-  const handleToggle = (index: number) => {
-    setActiveIndex(prev => prev === index ? null : index);
+  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const maskRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  const animating = useRef(false);
+
+  const toggleItem = (index: number) => {
+    if (animating.current) return;
+    animating.current = true;
+
+    const el = itemRefs.current[index];
+    if (!el) return;
+
+    const isExpanded = activeIndex === index;
+    const hasItemAbove = index > 0;
+
+    const header = el.querySelector(".header");
+    const contentEl = el.querySelector(".expand-content");
+
+    const tl = gsap.timeline({
+      defaults: {
+        duration: 0.55,
+        ease: "cubic-bezier(0.22, 1, 0.36, 1)",
+      },
+      onComplete: () => {
+        animating.current = false;
+      },
+    });
+
+    if (!isExpanded) {
+
+      // cerrar anterior
+      if (activeIndex !== null) {
+        const prev = itemRefs.current[activeIndex];
+        if (prev) {
+          tl.to(prev, {
+            width: COLLAPSED_WIDTH,
+            height: COLLAPSED_HEIGHT,
+          }, 0);
+
+          tl.set(prev.querySelector(".header"), { display: "flex" }, 0.2);
+          tl.set(prev.querySelector(".expand-content"), { display: "none" }, 0);
+        }
+      }
+
+      setActiveIndex(index);
+      setActiveCard(index);
+
+      tl.set(header, { display: "none" });
+
+      tl.set(contentEl, {
+        display: "block",
+        opacity: 1,
+      });
+
+      tl.fromTo(
+        el,
+        {
+          transformOrigin: hasItemAbove ? "top left" : "bottom left",
+          scale: 0.92,
+        },
+        {
+          width: EXPANDED_WIDTH,
+          height: EXPANDED_HEIGHT,
+          scale: 1,
+        },
+        0
+      );
+
+    } else {
+
+      tl.to(el, {
+        width: COLLAPSED_WIDTH,
+        height: COLLAPSED_HEIGHT,
+      });
+
+      tl.set(header, { display: "flex" });
+      tl.set(contentEl, { display: "none" });
+
+      setActiveIndex(null);
+    }
   };
 
   return (
-    <div className="hidden md:flex h-full p-12 gap-8">
+    <div className="hidden md:flex h-full p-12 gap-0">
       {/* Sidebar */}
-      <div className="relative z-20 w-[40%] flex flex-col justify-center gap-4">
+      <div className="relative z-20 w-[40%] flex flex-col justify-center gap-4 left-4">
 
-        {content.map((item: ShowcaseItem, index: number) => (
-          <div key={index}>
+        {content.map((item: any, index: number) => {
+          const isActive = activeIndex === index;
 
-            {/* Title / Button */}
-            <button
-              onClick={() => handleToggle(index)}
+          return (
+            <div
+              key={index}
+              ref={(el) => { itemRefs.current[index] = el }}
+              style={{
+                width: COLLAPSED_WIDTH,
+                height: COLLAPSED_HEIGHT,
+              }}
               className={cn(
-                "group flex items-center justify-between px-5 py-3 rounded-full transition-all duration-300",
-                activeIndex === index
-                  ? "bg-[#081c34] text-[#f1ba0a]"
-                  : "bg-transparent text-neutral-400 hover:bg-[#0d1e31]"
+                "relative overflow-hidden rounded-[28px]",
+                "bg-[#081c34] text-white",
+                "cursor-pointer"
               )}
+              onClick={() => toggleItem(index)}
             >
-              <span className="flex items-center gap-3">
-                <div
-                  className={cn(
-                    "p-1 rounded-full border transition-colors",
-                    activeIndex === index
-                      ? "border-[#f1ba0a] bg-[#f1ba0a] text-neutral-600"
-                      : "border-neutral-600 group-hover:border-neutral-400"
-                  )}
-                >
-                  <Plus size={16} strokeWidth={3} />
-                </div>
+              {/* Header */}
+              {!isActive && (
+                <div className="header flex items-center justify-between px-5 h-[56px]">
+                  <div className="flex items-center gap-3">
+                    <div className="p-1 rounded-full border border-neutral-600">
+                      <Plus size={16} strokeWidth={3} />
+                    </div>
 
-                <span className="text-lg font-medium tracking-tight">
-                  {item.title}
-                </span>
-              </span>
-            </button>
-
-            {/* Expandable Panel */}
-            <AnimatePresence initial={false}>
-              {activeIndex === index && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: "auto" }}
-                  exit={{ opacity: 0, height: 0 }}
-                  transition={{ duration: 0.35 }}
-                  className="overflow-hidden"
-                >
-                  <div className="mt-4 p-6 rounded-[24px] bg-[#030b14]/60 backdrop-blur-xl border border-white/10 text-white">
-                    <p className="text-base md:text-lg leading-relaxed">
-                      <span className="font-bold">{item.title}.</span>{" "}
-                      {item.description}
-                    </p>
+                    <span className="text-lg font-medium tracking-tight">
+                      {item.title}
+                    </span>
                   </div>
-                </motion.div>
+                </div>
               )}
-            </AnimatePresence>
 
-          </div>
-        ))}
+              {/* Expanded Content */}
+              <div
+                ref={(el) => { maskRefs.current[index] = el }}
+                style={{
+                  transform: isActive ? "scaleY(1)" : "scaleY(0)",
+                  transformOrigin: "top",
+                }}
+                className="absolute left-0 right-0 top-0"
+              >
+                <div className="px-6 pt-6 pb-6 text-sm text-white/80">
+                  {item.description}
+                </div>
+              </div>
+            </div>
+          );
+        })}
 
         {/* Vertical Controls */}
         <div className="absolute left-[-40px] flex flex-col gap-2 pt-4">
           <button
-            onClick={prevCard}
+            onClick={() => {
+              if (activeIndex === null) {
+                toggleItem(activeCard - 1 >= 0 ? activeCard - 1 : 0);
+              } else {
+                toggleItem(Math.max(0, activeIndex - 1));
+              }
+            }}
             className="p-2 bg-[#081c34] rounded-full text-neutral-500 hover:text-[#f1ba0a] transition-colors"
           >
             <ChevronUp size={20} />
           </button>
+
           <button
-            onClick={nextCard}
+            onClick={() => {
+              if (activeIndex === null) {
+                toggleItem(activeCard + 1 < content.length ? activeCard + 1 : activeCard);
+              } else {
+                toggleItem(Math.min(content.length - 1, activeIndex + 1));
+              }
+            }}
             className="p-2 bg-[#081c34] rounded-full text-neutral-500 hover:text-[#f1ba0a] transition-colors"
           >
             <ChevronDown size={20} />
           </button>
         </div>
-
       </div>
 
       {/* Content */}
@@ -311,37 +403,24 @@ const ContentDisplay = ({
   content: ShowcaseItem[];
   activeCard: number;
 }) => {
+  const current = content[activeCard];
+
   return (
-    <div className="relative w-full flex-1 rounded-2xl overflow-hidden">
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={activeCard}
-          initial={{ opacity: 0, scale: 1.02 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.98 }}
-          transition={{ duration: 0.5 }}
-          className="w-full flex items-center justify-center"
+    <div className="relative w-full flex-1 rounded-2xl flex items-center justify-center">
 
-        >
-          {content[activeCard].renderContent ? (
-            <div className={cn(
-              "relative w-full h-[400px] flex items-center justify-center",
-              "md:absolute md:inset-0 md:h-full"
-            )}>
-              {content[activeCard].renderContent}
-            </div>
-          ) : (
-            <img
-              src={content[activeCard].image}
-              className="absolute inset-0 w-full h-full object-cover"
-              alt={content[activeCard].title}
-            />
-          )}
-        </motion.div>
-      </AnimatePresence>
+      {current.renderContent ? (
+        <div className="relative w-full h-[400px] md:absolute md:inset-0 md:h-full flex items-center justify-center ">
+          {current.renderContent}
+        </div>
+      ) : (
+        <img
+          src={current.image}
+          className="absolute inset-0 w-full h-full object-cover"
+          alt={current.title}
+        />
+      )}
 
-      {/* Overlay gradient */}
-      {!content[activeCard].renderContent && (
+      {!current.renderContent && (
         <div className="absolute inset-0 bg-gradient-to-t from-[#030b14]/80 via-transparent to-transparent md:bg-gradient-to-r md:from-[#030b14]/40" />
       )}
     </div>

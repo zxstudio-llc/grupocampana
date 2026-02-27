@@ -45,11 +45,11 @@ export function ActivosSection() {
             renderContent: (
                 <div className="flex flex-col items-center">
                     <div className="flex items-baseline">
-                        <span className="text-white text-[180px] md:text-[200px] font-bold">+</span>
+                        <span className="text-white text-[120px] md:text-[200px] font-bold">+</span>
                         <NumberTicker
                             value={10}
 
-                            className="text-[180px] md:text-[250px] font-bold tracking-tighter text-white leading-none"
+                            className="text-[120px] md:text-[250px] font-bold tracking-tighter text-white leading-none"
                         />
                         <span className="text-white text-[120px] md:text-[250px] font-bold">K</span>
                     </div>
