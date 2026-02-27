@@ -30,7 +30,7 @@ export function StoryTimelineSection() {
 
                     {/* Párrafo: Gris equilibrado para lectura larga */}
                     <p className="text-sm font-normal:text-neutral-300 leading-relaxed min-w-[20rem] ">
-                    QUO se convierte en el primer proyecto inmobiliario de Millenium. Una torre de oficinas moderna que se vendió al 100% antes de su entrega. El resultado reafirma el modelo de negocio y abre camino para seguir creciendo con disciplina, innovación y planificación.
+                        QUO se convierte en el primer proyecto inmobiliario de Millenium. Una torre de oficinas moderna que se vendió al 100% antes de su entrega. El resultado reafirma el modelo de negocio y abre camino para seguir creciendo con disciplina, innovación y planificación.
                     </p>
                 </div>
             ),
@@ -46,7 +46,7 @@ export function StoryTimelineSection() {
 
                     {/* Párrafo: Gris equilibrado para lectura larga */}
                     <p className="text-sm font-normal:text-neutral-300 leading-relaxed min-w-[20rem] ">
-                       Con el lanzamiento de SOLARIS, incursionamos en un nuevo modelo: oficinas y consultorios médicos diseñados con eficiencia y funcionalidad. Un desarrollo que marcó un hito en la categoría y posicionó a Millenium como referente en proyectos especializados.
+                        Con el lanzamiento de SOLARIS, incursionamos en un nuevo modelo: oficinas y consultorios médicos diseñados con eficiencia y funcionalidad. Un desarrollo que marcó un hito en la categoría y posicionó a Millenium como referente en proyectos especializados.
                     </p>
                 </div>
             ),
@@ -185,6 +185,7 @@ export function StoryTimelineSection() {
         <div className="relative w-full overflow-clip">
             <Timeline heading="Desde 2012"
                 description="Construyendo un legado de excelencia, con una visión clara: impulsar el crecimiento sostenible de Ecuador a través de proyectos de alto impacto en sectores estratégicos. Con esfuerzo, disciplina, perseverancia y un enfoque hacia el largo plazo, hemos evolucionado hasta convertirnos en uno de los grupos empresariales más importantes del país, consolidando una trayectoria basada en innovación, solidez y confianza."
+                subtitle="Para el año 2030 queremos seguir siendo sinónimo de excelencia, confianza y visión a largo plazo."
                 data={data} />
         </div>
     );

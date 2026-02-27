@@ -27,21 +27,11 @@ const CompanySection = () => {
                         className="block lg:col-span-5 relative group"
                     >
                         <div className="relative w-full aspect-[4/5] rounded-none md:rounded-3xl overflow-hidden bg-neutral-900">
-                            <div className="relative w-[60%] md:w-[75%] lg:w-[85%] max-w-[550px] mx-auto pt-8">
-                                <Image
-                                    src="/assets/logo.svg"
-                                    alt="Logo"
-                                    width={600} // Aumentamos la base para evitar pixelado
-                                    height={150}
-                                    className="w-full h-auto invert brightness-0 opacity-90 transition-opacity duration-500 group-hover:opacity-100"
-                                    style={{ filter: "drop-shadow(0px 4px 20px rgba(0,0,0,0.1))" }}
-                                />
-                            </div>
                             <Image
                                 src="https://grupocampana.ec/wp-content/uploads/2025/04/Pablo-Campana-1000x1498-1.png"
                                 alt="Pablo Campana - CEO Grupo Campana"
                                 fill
-                                className="object-cover object-top grayscale group-hover:grayscale-0 transition-all duration-700 ease-in-out z-10"
+                                className="object-cover object-top z-10"
                                 priority
                             />
 
@@ -87,7 +77,7 @@ const CompanySection = () => {
                             className="text-[#001D3D] text-5xl md:text-7xl font-bold tracking-tighter leading-[0.9] mb-4 text-center lg:text-left uppercase"
                         >
                             CONSTRUIR EL <br />
-                            <span className="text-[#b5934a]">FUTURO HOY.</span>
+                            <span >FUTURO HOY.</span>
                         </motion.h2>
 
                         <div className="max-w-2xl space-y-6">

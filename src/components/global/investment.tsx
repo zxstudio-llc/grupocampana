@@ -19,7 +19,7 @@ export default function InvestmentsSection() {
                         animate={isVisible ? { opacity: 1, y: 0 } : {}}
                         className="text-[#b5934a] font-bold tracking-[0.2em] text-sm md:text-base uppercase text-center"
                     >
-                        Oportunidades de Inversión
+                        Impulsa tu capital en un país de oportunidades
                     </motion.span>
 
                     {/* Headline Masivo - Respetando tus saltos de línea y texto */}
@@ -31,26 +31,18 @@ export default function InvestmentsSection() {
                             className="text-[#001D3D] gap-12 text-6xl md:text-[100px] font-bold tracking-tight leading-[0.9] uppercase text-center"
                         >
                             <span>¿POR QUÉ INVERTIR </span>
-                            <span className="text-[#b5934a]">EN ECUADOR?</span>
+                            <span >EN ECUADOR?</span>
                         </motion.h2>
                     </div>
 
                     {/* Descripción y Cuerpo - Distribución de dos niveles como en la captura */}
                     <div className="max-w-5xl space-y-8">
-                        <motion.h3
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={isVisible ? { opacity: 1, y: 0 } : {}}
-                            transition={{ delay: 0.2 }}
-                            className="text-xl md:text-2xl font-semibold text-[#001D3D] leading-tight text-center"
-                        >
-                            Impulsa tu capital en un país de <span className="text-[#b5934a]">oportunidades</span>
-                        </motion.h3>
 
                         <motion.p
                             initial={{ opacity: 0, y: 20 }}
                             animate={isVisible ? { opacity: 1, y: 0 } : {}}
                             transition={{ delay: 0.3 }}
-                            className="text-[#001D3D] text-xl md:text-xl leading-relaxed max-w-4xl mx-auto"
+                            className="text-[#001D3D] text-xl md:text-xl leading-6 max-w-4xl mx-auto"
                             style={{
                                 textAlign: "justify",
                                 textAlignLast: "center",
@@ -58,8 +50,8 @@ export default function InvestmentsSection() {
                             }}
                         >
                             En Grupo Campana abrimos las puertas a un Ecuador lleno de potencial.
-                            Nuestra experiencia en sectores clave como <span className="font-bold text-[#b5934a]">bienes raíces, salud, seguros y alimentación</span>,
-                            combinada con un modelo de gestión transparente y ágil, convierte cada proyecto en una oportunidad <span className="font-bold text-[#b5934a] uppercase tracking-wider">rentable y segura</span>.
+                            Nuestra experiencia en sectores clave como bienes raíces, salud, seguros y alimentación,
+                            combinada con un modelo de gestión transparente y ágil, convierte cada proyecto en una oportunidad rentable y segura.
                         </motion.p>
                     </div>
                 </div>

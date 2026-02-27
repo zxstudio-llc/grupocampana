@@ -7,6 +7,7 @@ import { Tooltip } from "./tooltip-card";
 import { Button } from "./button";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useInView } from "framer-motion";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -18,18 +19,25 @@ interface TimelineProps {
     data: TimelineEntry[];
     heading: string;
     description: string;
+    subtitle: string;
 }
 
 export const Timeline = ({
     data,
     heading,
     description,
+    subtitle,
 }: TimelineProps) => {
     const sectionRef = useRef<HTMLDivElement>(null);
     const horizontalRef = useRef<HTMLDivElement>(null);
     const progressLineRef = useRef<HTMLDivElement>(null);
     const progressLineMobileRef = useRef<HTMLDivElement>(null);
     const mobileContainerRef = useRef<HTMLDivElement>(null);
+    const ref = useRef<HTMLDivElement>(null);
+    const inView = useInView(ref, {
+        once: true,
+        margin: "0px 0px -30% 0px",
+    });
 
     useLayoutEffect(() => {
         if (!sectionRef.current || !horizontalRef.current) return;
@@ -156,16 +164,16 @@ export const Timeline = ({
                 </h2>
 
                 {description && (
-                    <p 
-                    className="text-[#001D3D] text-base md:text-xl max-w-4xl mx-auto"
-                    style={{ 
-                        textAlign: "justify", 
-                        textAlignLast: "center", 
-                        textJustify: "inter-word" 
-                    }}
-                >
-                    {description}
-                </p>
+                    <p
+                        className="text-[#001D3D] text-base md:text-xl max-w-4xl mx-auto"
+                        style={{
+                            textAlign: "justify",
+                            textAlignLast: "center",
+                            textJustify: "inter-word"
+                        }}
+                    >
+                        {description}
+                    </p>
                 )}
             </div>
 
@@ -199,9 +207,9 @@ export const Timeline = ({
                                 </h3>
 
                                 <div className="text-[#001D3D] text-lg leading-relaxed font-medium"
-                                    style={{ 
-                                        textAlign: "justify", 
-                                        textJustify: "inter-word" 
+                                    style={{
+                                        textAlign: "justify",
+                                        textJustify: "inter-word"
                                     }}
                                 >
                                     {item.content}
@@ -266,19 +274,22 @@ export const Timeline = ({
                     </div>
                 </div>
             </div>
-
-            <div className="max-w-7xl mx-auto px-6 text-center">
-                <Button
-                    asChild
-                    className="px-6 py-6 border-[#b5934a]/30 hover:bg-[#b5934a] transition-all group rounded-full bg-[#001D3D] w-full md:w-fit"
+            <motion.div
+                ref={ref}
+                className="max-w-7xl mx-auto px-6 text-center"
+                initial={{ opacity: 0, y: 50 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+            >
+                <motion.h2
+                    className="text-[#001D3D] text-3xl md:text-7xl font-extrabold tracking-tighter uppercase"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={inView ? { opacity: 1, y: 0 } : {}}
+                    transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
                 >
-                    <Link href="/historia" target="_blank">
-                        <span className="font-bold tracking-tight text-white">
-                            Conoce Nuestra Historia
-                        </span>
-                    </Link>
-                </Button>
-            </div>
+                    {subtitle}
+                </motion.h2>
+            </motion.div>
         </section>
     );
 };
