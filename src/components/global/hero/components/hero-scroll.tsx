@@ -52,7 +52,7 @@ export default function HeroScroll({ videoSrc, children }: Props) {
                 scrollTrigger: {
                     trigger: sectionRef.current,
                     start: "top top",
-                    end: "+=800%",
+                    end: "+=300%",
                     scrub: true,
                     pin: true,
                     anticipatePin: 1,
@@ -67,62 +67,41 @@ export default function HeroScroll({ videoSrc, children }: Props) {
 
             // Video Fade
             tl.to(videoRef.current, {
-                    opacity: 0,
-                    ease: "none",
-                }, 0.5
+                opacity: 0,
+                ease: "none",
+            }, 0.3
             );
 
             // White Logo Transition
             tl.to(whiteLogoRef.current, {
-                    opacity: 1,
-                    ease: "none",
-                }, 0.5
+                opacity: 1,
+                ease: "none",
+            }, 0.5
             );
 
             // Logo Final Position
             tl.to(whiteLogoRef.current, {
-                y: yOffset,
                 scale: 1,
                 ease: "none",
             });
 
-            tl.set(maskLogoRef.current?.container, { 
-                    autoAlpha: 0
-                }, "<+=0.02"
-            );
+            tl.set(maskLogoRef.current?.container, {
+                autoAlpha: 0
+            });
 
             // Text & CTA Position 
             tl.to(textRef.current, {
-                    opacity: 1,
-                    y: 90,
-                    ease: "none",
-                }, "-=0.2"
-            );
-            
-            tl.to(".reveal-rotate", {
                 opacity: 1,
-                y: 0,
-                duration: 1,
-                ease: "power2.out"
+                y: 90,
+                ease: "none",
             });
-            tl.to({}, { duration: 0.2 });
 
-            tl.to(".reveal-rotate", {
-                opacity: 0,
-                y: -50,
-                duration: 1,
-                filter: "blur(10px)",
-                ease: "power2.in"
-            });
-            
             tl.to(".reveal-description", {
                 opacity: 1,
                 duration: 1,
                 ease: "power2.out"
-            }, ">");
+            });
 
-            tl.to({}, { duration: 0.2 });
-            
             // 4. HIDE TOTAL: Una vez pasa ese "tiempo" de scroll, ocultamos todo
             tl.to([".reveal-description", whiteLogoRef.current], {
                 opacity: 0,
@@ -138,7 +117,7 @@ export default function HeroScroll({ videoSrc, children }: Props) {
 
     return (
         <section ref={sectionRef} className="relative bg-black">
-            <div className="h-screen overflow-hidden relative transition-opacity duration-700" style={{ opacity: isVideoReady ? 1 : 0 }}>
+            <div className="h-screen overflow-hidden relative transition-opacity duration-700 bg-[#00122d]" style={{ opacity: isVideoReady ? 1 : 0 }}>
                 <iframe
                     ref={videoRef}
                     src={`${videoSrc}?background=1&autoplay=1&loop=1&muted=1&transparent=0`}
@@ -148,7 +127,7 @@ export default function HeroScroll({ videoSrc, children }: Props) {
                     onLoad={() => setIsVideoReady(true)}
                 />
                 <MaskedLogo ref={maskLogoRef} videoSrc={videoSrc} />
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-30">
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-30 ">
                     <svg ref={whiteLogoRef} viewBox="0 0 1334.1 242.1" className="w-full h-full max-w-[93%] md:max-w-[530px]" fill="white">
                         <path d="M165.1,28.7c4.4,0,7.3,3,7.3,7.3v31c0,4.4-3,7.3-7.3,7.3h-89.1c-9.3,0-15.2,8.5-15.2,17.1v60.1c0,8.8,5.9,16.9,15.2,16.9h89.1c4.4,0,7.3,3,7.3,7.3v31.3c0,4.4-3,7.3-7.3,7.3h-89.1c-34.9,0-62.3-29.3-62.3-63.7v-57.9c0-34.5,27.2-64,62.3-64,0,0,89.1,0,89.1,0Z" />
                         <path d="M387,202.6l-70.5-156.5c-5.7-12.2-17.9-20.1-31.3-20.1s-25.9,8.1-31.3,20.1l-70.3,156.5c-.8,1.4-1,3-1,4.4,0,4.6,3.9,6,7.9,6h189.7c3.9,0,7.9-1.4,7.9-6s-.3-3-1-4.4h-.1ZM268.8,127.2c3.2-7.3,7.9-16.3,9.5-20.1,1.3-2.7,3.5-6.8,6.8-6.8s5.7,4.1,6.8,6.8c1.7,3.3,5.9,11.7,9,19.1l21.4,47.9h-74.5l21-46.9h0Z" />

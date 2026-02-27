@@ -14,20 +14,22 @@ const HomePage = () => {
 
     return (
         <>
-        <Preloader />
-        <section className="w-screen relative flex items-center justify-center flex-col px-0 md:px-0 py-0">
-            {/* <Hero/> */}
-            <RevealHero/>
-            <AboutSection/>
-            <ValoresSection/>
-            <ActivosSection/>
-            <AppleCardsCarouselDemo/>
-            <StoryTimelineSection/>
-            <InvestmentsSection/>
-            <CompanySection/>
-            <FAQSection/>
-            <ContactSection/>
-        </section>
+            <Preloader />
+            <section className="w-screen relative flex items-center justify-center flex-col px-0 md:px-0 py-0">
+                {/* <Hero/> */}
+                <RevealHero />
+                <AboutSection />
+                <div className="bg-gradient-to-b from-black to-[#00122d] w-screen">
+                    <ValoresSection />
+                    <ActivosSection />
+                </div>
+                <AppleCardsCarouselDemo />
+                <StoryTimelineSection />
+                <InvestmentsSection />
+                <CompanySection />
+                <FAQSection />
+                <ContactSection />
+            </section>
         </>
     )
 };

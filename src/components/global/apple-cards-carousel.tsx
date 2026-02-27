@@ -210,7 +210,7 @@ export const Card = ({ card, index, layout = false }: { card: Card; index: numbe
       <motion.button
         layoutId={layout ? `card-${card.title}` : undefined}
         onClick={() => setOpen(true)}
-        className="relative group h-[500px] w-[300px] md:h-[600px] md:w-[1000px] flex flex-col items-start justify-start overflow-hidden rounded-[32px] bg-neutral-900 border"
+        className="relative group h-[500px] w-[300px] md:h-[700px] md:w-[1200px] flex flex-col items-start justify-start overflow-hidden rounded-[32px] bg-neutral-900 border"
       >
         <div className="absolute inset-0 z-20 bg-gradient-to-b from-black/80 via-transparent to-black/20" />
         <div className="relative z-30 p-10 md:p-14 text-left">

@@ -48,7 +48,7 @@ export const MaskedLogo = forwardRef<
             </g>
           </mask>
         </defs>
-        <rect x="0" y="0" width="4000" height="4000" fill="black" mask="url(#logoMask)"/>
+        <rect x="0" y="0" width="4000" height="4000" fill="#00122d" mask="url(#logoMask)"/>
       </svg>
     </div>
   );
