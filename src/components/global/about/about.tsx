@@ -8,7 +8,7 @@ import { VideoVipSection } from "./components/video-section";
 export function AboutSection() {
     return (
         <div className="relative mx-auto my-10 flex max-w-full flex-col items-center justify-center overflow-hidden h-screen">
-            <div className="px-6 md:px-24 py-2 md:py-20 flex flex-col lg:flex-row-reverse items-center gap-2 md:gap-4 md:max-w-screen">
+            <div className="px-20 md:px-24 py-2 md:py-20 flex flex-col lg:flex-row-reverse items-center gap-2 md:gap-4 md:max-w-screen">
 
                 {/* TEXTO - Viene desde la izquierda */}
                 <motion.div
@@ -85,7 +85,7 @@ export function AboutSection() {
                                 ))}
                         </p>
 
-                        <div className="text-[#001D3D]/80 leading-6 text-md md:text-lg text-justify [text-justify:inter-word] md:[text-align-last:left] [text-align-last:center]">
+                        <div className="text-[#001D3D]/80 leading-6 text-md md:text-lg text-justify [text-justify:inter-word] md:[text-align-last:left] [text-align-last:center] px-4 md:px-0">
                             <motion.p
                                 initial={{ opacity: 0, filter: "blur(4px)" }}
                                 whileInView={{ opacity: 1, filter: "blur(0px)" }}
