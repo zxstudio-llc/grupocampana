@@ -8,6 +8,8 @@ import { Button } from "./button";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
+import { CounterFlip } from "../global/story/counter-flip";
+import { HeadingWithCounter } from "../global/story/heading-with-counter";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -16,10 +18,15 @@ interface TimelineEntry {
     content: React.ReactNode;
 }
 interface TimelineProps {
-    data: TimelineEntry[];
     heading: string;
-    description: string;
-    subtitle: string;
+    description?: string;
+    subtitle?: string;
+    animateYear?: {
+        from: number;
+        to: number;
+        duration?: number;
+    };
+    data: TimelineEntry[];
 }
 
 export const Timeline = ({
@@ -27,6 +34,7 @@ export const Timeline = ({
     heading,
     description,
     subtitle,
+    animateYear,
 }: TimelineProps) => {
     const sectionRef = useRef<HTMLDivElement>(null);
     const horizontalRef = useRef<HTMLDivElement>(null);
@@ -158,14 +166,12 @@ export const Timeline = ({
             ref={sectionRef}
             className="w-full bg-white relative py-24 lg:h-screen lg:overflow-hidden"
         >
-            <div className="max-w-7xl mx-auto px-6 mt-20 text-center">
-                <h2 className="text-[#001D3D] text-5xl md:text-7xl font-bold tracking-tighter uppercase mb-6">
-                    {heading}
-                </h2>
+            <div className="max-w-7xl mx-auto px-6 text-center">
+                <HeadingWithCounter text={heading} animateYear={animateYear} />
 
                 {description && (
                     <p
-                        className="text-[#001D3D] text-base md:text-xl max-w-4xl mx-auto"
+                        className="text-[#001D3D] text-base md:text-xl max-w-5xl mx-auto"
                         style={{
                             textAlign: "justify",
                             textAlignLast: "center",
@@ -282,7 +288,7 @@ export const Timeline = ({
                 transition={{ duration: 0.8, ease: "easeOut" }}
             >
                 <motion.h2
-                    className="text-[#001D3D] text-3xl md:text-7xl font-extrabold tracking-tighter uppercase"
+                    className="text-[#001D3D] text-3xl md:text-5xl font-extrabold tracking-tighter uppercase"
                     initial={{ opacity: 0, y: 20 }}
                     animate={inView ? { opacity: 1, y: 0 } : {}}
                     transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}

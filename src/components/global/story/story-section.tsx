@@ -182,8 +182,10 @@ export function StoryTimelineSection() {
         },
     ];
     return (
-        <div className="relative w-full overflow-clip">
-            <Timeline heading="Desde 2012"
+        <div className="relative w-full overflow-clip py-24">
+            <Timeline
+                heading="Desde 2012"
+                animateYear={{ from: 1995, to: 2012, duration: 2000 }}
                 description="Construyendo un legado de excelencia, con una visión clara: impulsar el crecimiento sostenible de Ecuador a través de proyectos de alto impacto en sectores estratégicos. Con esfuerzo, disciplina, perseverancia y un enfoque hacia el largo plazo, hemos evolucionado hasta convertirnos en uno de los grupos empresariales más importantes del país, consolidando una trayectoria basada en innovación, solidez y confianza."
                 subtitle="Para el año 2030 queremos seguir siendo sinónimo de excelencia, confianza y visión a largo plazo."
                 data={data} />

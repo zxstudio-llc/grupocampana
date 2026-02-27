@@ -119,7 +119,7 @@ export const Carousel = ({ items }: CarouselProps) => {
         Math.abs(rect.top + rect.height / 2 - viewportHeight / 2);
 
       // Visible al menos 20% Y centrado dentro de 100px
-      if (ratio >= 0.2 && offsetFromCenter <= 100) {
+      if (ratio >= 0.1 && offsetFromCenter <= 300) {
         setControlsVisible(true);
       } else {
         setControlsVisible(false);
