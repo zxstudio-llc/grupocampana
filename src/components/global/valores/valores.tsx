@@ -49,7 +49,7 @@ export function ValoresSection() {
             <div className="w-full max-w-7xl mx-auto px-4 md:px-6 mb-12 md:mb-16 overflow-hidden">
 
                 <div className="w-full flex justify-center mb-8 md:mb-10">
-                    <h2 className="pointer-events-none bg-gradient-to-b from-[#00122d] to-white bg-clip-text text-center text-5xl md:text-8xl leading-none whitespace-pre-wrap text-transparent font-bold flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4 uppercase">
+                    <h2 className="pointer-events-none text-white bg-clip-text text-center text-5xl md:text-8xl leading-none whitespace-pre-wrap text-transparent font-bold flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4 uppercase">
                         <motion.span
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
@@ -99,8 +99,6 @@ export function ValoresSection() {
                         <ValorCard key={valor.nombre} {...valor} />
                     ))}
                 </Marquee>
-                <div className="pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-[#00122d] z-10"></div>
-                <div className="pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-[#00122d] z-10"></div>
             </div>
         </section>
     );

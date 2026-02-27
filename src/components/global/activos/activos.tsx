@@ -75,7 +75,7 @@ export function ActivosSection() {
     return (
         <section className="py-24">
             <div className="max-w-7xl mx-auto px-6 mb-16 text-center">
-                <h2 className="pointer-events-none bg-gradient-to-b from-[#3a5983] to-white bg-clip-text text-center text-5xl md:text-8xl leading-none whitespace-pre-wrap text-transparent font-bold flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4 uppercase">
+                <h2 className="pointer-events-none text-white bg-clip-text text-center text-5xl md:text-8xl leading-none whitespace-pre-wrap text-transparent font-bold flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4 uppercase">
                     Activos <span>estratégicos</span>
                 </h2>
                 <p className="text-white leading-relaxed text-lg md:text-xl font-semibold tracking-tight text-center">
